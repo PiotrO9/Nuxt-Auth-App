@@ -1,12 +1,36 @@
 <template>
-    <form>
-        <input type="text" placeholder="Email">
-        <input type="text" placeholder="Password">
-        <button>Log in</button>
+    <form @submit.prevent="() => (isSignUp ? SignUp() : Login())">
+        <input type="text" placeholder="Email" v-model="email">
+        <input type="password" placeholder="Password" v-model="password">
+        <button type="submit">Log in</button>
     </form>
 </template>
 
 <script setup lang="ts">
+const isSignUp = ref<boolean>(false)
+const email = ref<string>("")
+const password = ref<string>("")
+const client = useSupabaseClient()
+
+const SignUp = async () => {
+    const { user, error } = await client.auth.signUp({
+        email: email.value,
+        password: password.value
+    })
+
+    console.log('user', user)
+    console.log('error', error)
+}
+
+const Login = async () => {
+    const { user, error } = await client.auth.signInWithPassword({
+        email: email.value,
+        password: password.value
+    })
+
+    console.log('user', user)
+    console.log('error', error)
+}
 
 </script>
 

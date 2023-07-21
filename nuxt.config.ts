@@ -15,7 +15,4 @@ export default defineNuxtConfig({
       },
     ],
   },
-  build: {
-    css: ["@/globalStyles.scss"],
-  },
 });

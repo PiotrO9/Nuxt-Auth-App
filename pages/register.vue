@@ -1,18 +1,19 @@
 <template>
     <main>
         <h1>Nuxt 3 + Supabase Auth</h1>
-        <LoginForm />
-        <NuxtLink to="/register">
-            <span>Create a new account</span>
+        <RegisterForm />
+        <NuxtLink to="/">
+            <span>Back to login</span>
         </NuxtLink>
     </main>
 </template>
 
 <script setup lang="ts">
 
+
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap");
 
 * {

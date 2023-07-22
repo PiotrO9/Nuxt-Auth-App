@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  modules: ["@nuxtjs/supabase"],
   router: {
     routes: [
       {
@@ -9,11 +10,15 @@ export default defineNuxtConfig({
         component: "~/pages/index.vue",
       },
       {
-        name: "about",
-        path: "/about",
-        component: "~/pages/about.vue",
+        name: "register",
+        path: "/register",
+        component: "~/pages/register.vue",
+      },
+      {
+        name: "notes",
+        path: "/notes",
+        component: "~/pages/notes.vue",
       },
     ],
   },
-  modules: ["@nuxtjs/supabase"],
 });

@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="() => (isSignUp ? SignUp() : Login())">
+    <form @submit.prevent="test">
         <input type="text" placeholder="Email" v-model="email">
         <input type="password" placeholder="Password" v-model="password">
         <button type="submit">Log in</button>
@@ -30,6 +30,16 @@ const Login = async () => {
 
     console.log('user', user)
     console.log('error', error)
+}
+
+const test = async () => {
+    const { data, error } = await client.from('Test').select('*');
+
+    if (error) {
+        throw new Error('Failed to fetch records.');
+    }
+
+    console.log('All records from "Test" table:', data);
 }
 
 </script>
@@ -69,6 +79,7 @@ form {
         box-sizing: border-box;
         color: white;
         font-weight: 500;
+        cursor: pointer;
     }
 }
 </style>

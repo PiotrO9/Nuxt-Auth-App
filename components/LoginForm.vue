@@ -1,46 +1,44 @@
 <template>
-    <form @submit.prevent="test">
+    <form @submit.prevent="signIn">
         <input type="text" placeholder="Email" v-model="email">
         <input type="password" placeholder="Password" v-model="password">
         <button type="submit">Log in</button>
+        <span v-if="errorMsg">
+            {{ errorMsg }}
+        </span>
     </form>
 </template>
 
 <script setup lang="ts">
-const isSignUp = ref<boolean>(false)
+const client = useSupabaseClient()
+const router = useRouter()
+
 const email = ref<string>("")
 const password = ref<string>("")
-const client = useSupabaseClient()
+const errorMsg = ref<string | null>(null)
+const user = useSupabaseUser()
 
-const SignUp = async () => {
-    const { user, error } = await client.auth.signUp({
-        email: email.value,
-        password: password.value
-    })
-
-    console.log('user', user)
-    console.log('error', error)
-}
-
-const Login = async () => {
-    const { user, error } = await client.auth.signInWithPassword({
-        email: email.value,
-        password: password.value
-    })
-
-    console.log('user', user)
-    console.log('error', error)
-}
-
-const test = async () => {
-    const { data, error } = await client.from('Test').select('*');
-
-    if (error) {
-        throw new Error('Failed to fetch records.');
+const signIn = async () => {
+    try {
+        const { error } = await client.auth.signInWithPassword({
+            email: email.value,
+            password: password.value
+        });
+        if (error) throw error;
+        router.push("/notes")
     }
-
-    console.log('All records from "Test" table:', data);
+    catch (error) {
+        errorMsg.value = error.message
+    }
 }
+
+onMounted(() => {
+    watchEffect(() => {
+        if (user.value) {
+            navigateTo('/notes')
+        }
+    })
+})
 
 </script>
 
@@ -80,6 +78,14 @@ form {
         color: white;
         font-weight: 500;
         cursor: pointer;
+    }
+
+    span {
+        text-align: start;
+        font-weight: 500;
+        font-size: 20px;
+        padding-left: 10px;
+        color: red;
     }
 }
 </style>

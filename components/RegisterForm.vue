@@ -3,8 +3,11 @@
         <input type="text" placeholder="Email" v-model="email">
         <input type="password" placeholder="Password" v-model="password">
         <button type="submit">Sign in</button>
-        <span v-if="errorMsg">
+        <span v-if="errorMsg" class="error">
             {{ errorMsg }}
+        </span>
+        <span v-if="successMsg" class="succes">
+            {{ successMsg }}
         </span>
     </form>
 </template>
@@ -19,6 +22,9 @@ const errorMsg = ref<string | null>(null)
 const successMsg = ref<string | null>(null)
 
 const SignUp = async () => {
+    errorMsg.value = ""
+    successMsg.value = ""
+
     try {
         const { error } = await supabase.auth.signUp({
             email: email.value,
@@ -26,37 +32,12 @@ const SignUp = async () => {
         });
 
         if (error) {
-            if (error.code === 'auth.email-already-in-use') {
-                errorMsg.value = 'This email address is already registered. Please log in or use a different email.';
-            } else if (error.code === 'auth.too-many-requests') {
-                errorMsg.value = 'Email rate limit exceeded. Please try again later.';
-            } else {
-                throw new Error('Sign up failed.');
-            }
+            throw error
         } else {
             successMsg.value = 'Check your email to confirm your account.';
         }
     } catch (error) {
         errorMsg.value = error.message || 'An error occurred during sign up.';
-    }
-};
-
-const addSampleData = async () => {
-    try {
-        const sampleData = [
-            { email: 'sample1@example.com', password: 'password123' },
-            { email: 'sample2@example.com', password: 'pass456word' },
-        ];
-
-        const { data, error } = await supabase.from('Test').select("*");
-
-        if (error) {
-            throw new Error('Failed to add sample data.');
-        }
-
-        console.log('Sample data added successfully:', data);
-    } catch (error) {
-        console.error(error.message || 'An error occurred while adding sample data.');
     }
 };
 
@@ -102,10 +83,17 @@ form {
 
     span {
         text-align: start;
-        color: red;
         font-weight: 500;
         font-size: 20px;
         padding-left: 10px;
+
+        &.error {
+            color: red;
+        }
+
+        &.succes {
+            color: green;
+        }
     }
 }
 </style>

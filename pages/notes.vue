@@ -73,16 +73,7 @@ const logout = async () => {
 </script>
 
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap");
-
-* {
-    font-family: 'Inter', sans-serif;
-}
-
-h1 {
-    color: white;
-}
-
+h1,
 span {
     color: white;
 }

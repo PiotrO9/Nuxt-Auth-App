@@ -14,12 +14,6 @@
 </script>
 
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap");
-
-* {
-    font-family: 'Inter', sans-serif;
-}
-
 main {
     width: 100vw;
     max-width: 800px;

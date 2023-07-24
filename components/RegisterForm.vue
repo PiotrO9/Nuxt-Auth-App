@@ -44,11 +44,7 @@ const SignUp = async () => {
 </script>
 
 <style scoped lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap");
-
-* {
-    font-family: 'Inter', sans-serif;
-}
+@import "../assets/styles/globalStyles";
 
 form {
     width: 100%;
@@ -69,12 +65,12 @@ form {
 
     input {
         padding-left: 10px;
-        background-color: #444b5a;
-        color: #7f8695;
+        background-color: $inputSlateGray;
+        color: $inputTextSlateGray;
     }
 
     button {
-        background-color: #01bf5b;
+        background-color: $buttonGreen;
         box-sizing: border-box;
         color: white;
         font-weight: 500;
@@ -88,11 +84,11 @@ form {
         padding-left: 10px;
 
         &.error {
-            color: red;
+            color: $errorRed;
         }
 
         &.succes {
-            color: green;
+            color: $buttonGreen;
         }
     }
 }

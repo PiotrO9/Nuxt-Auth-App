@@ -37,10 +37,10 @@ main {
     }
 
     a {
-        color: white;
-        text-decoration: underline;
         margin-top: 30px;
+        text-decoration: underline;
         font-size: 20px;
+        color: white;
         cursor: pointer;
     }
 
